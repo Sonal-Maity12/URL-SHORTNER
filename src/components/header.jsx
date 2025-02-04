@@ -9,9 +9,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { LinkIcon, LogOut } from "lucide-react";
+import { LinkIcon,LogOut } from "lucide-react";
 import { UrlState } from "@/context";
-import useFetch from "@/hooks/use-fetch";
+import useFetch from "@/hooks/useFetch";
 import { logout } from "@/db/apiAuth";
 import { BarLoader } from "react-spinners";
 
@@ -20,7 +20,7 @@ const Header = () => {
 
   const { user, fetchUser } = UrlState();
 
-  const { loading, fn: fnlogout } = useFetch(logout);
+  const { loading, fn: fnLogout } = useFetch(logout);
   return (
     <>
       <nav className="pt-6 flex justify-between items-center text-black px-10">
@@ -40,7 +40,7 @@ const Header = () => {
               <DropdownMenuTrigger className="w-10 rounded-full overflow-hidden">
                 <Avatar>
                   <AvatarImage
-                    src={user.user_metadata?.profile_pic}
+                    src={user?.user_metadata?.profile_pic}
                     className="object-contain"
                   />
                   <AvatarFallback>SM</AvatarFallback>
@@ -48,7 +48,7 @@ const Header = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuLabel>
-                  {user.user_metadata?.name}
+                  {user?.user_metadata?.name}
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
@@ -61,7 +61,7 @@ const Header = () => {
                   <LogOut className="mr-2 h-4 w-4" />
                   <span
                     onClick={() => {
-                      fnlogout().then(() => {
+                      fnLogout().then(() => {
                         fetchUser();
                         navigate("/");
                       });
@@ -75,7 +75,7 @@ const Header = () => {
           )}
         </div>
       </nav>
-      {loading && <BarLoader width={"100%"} color="#36d7b7" />}
+      {loading && <BarLoader className="mb-4" width={"100%"} color="#36d7b7" />}
     </>
   );
 };

@@ -23,9 +23,11 @@ const router = createBrowserRouter([
       {
         path: '/dashboard',
         element: (
-          <RequireAuth>
-            <Dashboard />
-          </RequireAuth>
+        
+           <RequireAuth>
+             <Dashboard /> 
+            
+           </RequireAuth> 
         ),
       },
       {

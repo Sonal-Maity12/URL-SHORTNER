@@ -12,7 +12,7 @@ import { Button } from "./ui/button.jsx";
 import { BeatLoader } from "react-spinners";
 import  Error  from "./error.jsx";
 import * as Yup from "yup";
-import useFetch from "@/hooks/use-fetch.jsx";
+import useFetch from "@/hooks/useFetch.jsx";
 import { login } from "@/db/apiAuth.js";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { UrlState } from "@/context.jsx";
