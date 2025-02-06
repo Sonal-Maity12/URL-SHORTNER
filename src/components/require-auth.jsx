@@ -1,23 +1,28 @@
-import { UrlState } from "@/context";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { BarLoader } from "react-spinners";
+import { UrlState } from '@/context'; 
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { BarLoader } from 'react-spinners';
 
 function RequireAuth({ children }) {
-  const navigate = useNavigate();
-  const { loading, isAuthenticated } = UrlState();
+    const navigate = useNavigate();
+    const { loading, isAuthenticated } = UrlState();
 
-  useEffect(() => {
-    if (!isAuthenticated && loading === false) {
-      navigate("/auth");
+    useEffect(() => {
+        // Redirect if not authenticated and loading is false
+        if (!isAuthenticated && !loading) {
+            navigate("/auth");
+        }
+    }, [isAuthenticated, loading, navigate]);
+
+    if (loading) return <BarLoader width={"100%"} color="#36d7b7" />;
+
+    // If authenticated, render children (protected routes)
+    if (isAuthenticated) {
+        return children;
     }
-  }, [isAuthenticated, loading, navigate]); // ✅ Added `navigate` to dependencies to avoid warnings
 
-  if (loading) return <BarLoader width={"100%"} color="#36d7b7" />;
-
-  if (!isAuthenticated) return null; // ✅ Prevents unauthorized content from rendering
-
-  return children;
+    // Redirect to login if not authenticated
+    return null;
 }
 
 export default RequireAuth;
