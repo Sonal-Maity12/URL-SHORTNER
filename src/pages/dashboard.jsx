@@ -1,10 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Filter } from "lucide-react";
+import { useState } from "react";
 
 import { BarLoader } from "react-spinners";
 
 const Dashboard = () => {
+
+  const [searchQuery, setSearchQuery] =useState("")
   return (
     <div  className=" flex flex-col mt-20 p-4">
       {true && <BarLoader width={"100%"} color="#36d7b7" />}
@@ -34,7 +38,11 @@ const Dashboard = () => {
       </div>
 
       <div className="relative mt-4">
-        <Input placeholder="Search links..." />
+        <Input type="text" placeholder="Filter links..." 
+        value={searchQuery}
+        conChang={(e) => setSearchQuery(e.target.value)}
+        />
+        <Filter className="absolute top-2 right-2 p-1"/> 
       </div>
       
     </div>
