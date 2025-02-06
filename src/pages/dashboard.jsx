@@ -40,7 +40,9 @@ const Dashboard = () => {
   
   return (
     <div  className=" flex flex-col mt-20 p-4">
-      {true && <BarLoader width={"100%"} color="#36d7b7" />}
+      {(loading || loadingClicks) && (
+        <BarLoader width={"100%"} color="#36d7b7" />
+    )}
 
       <div className="grid grid-cols-2 gap-4 p-4">
         <Card>
@@ -48,7 +50,7 @@ const Dashboard = () => {
             <CardTitle>Links Created</CardTitle>
           </CardHeader>
           <CardContent>
-            <p>0</p>
+            <p>{urls?.length}</p>
           </CardContent>
         </Card>
         <Card>
@@ -73,7 +75,7 @@ const Dashboard = () => {
         />
         <Filter className="absolute top-2 right-2 p-1"/> 
       </div>
-      {/* <Error message={error.message}/> */}
+      {/* {error &&<Error message={error?.message}/>} */}
     </div>
   );
 };
