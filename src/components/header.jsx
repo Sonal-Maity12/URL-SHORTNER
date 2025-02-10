@@ -23,7 +23,7 @@ const Header = () => {
   const { loading, fn: fnLogout } = useFetch(logout);
   return (
     <>
-      <nav className="pt-6 flex justify-between items-center text-black px-10">
+      <nav className="pt-6 flex justify-between items-center ml-3 text-black px-10">
         <Link to="/">
           <img
             src="https://miro.medium.com/v2/resize:fit:566/1*DQAVyAM94Q88sk5Pq1iOJg.png"
