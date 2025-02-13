@@ -26,6 +26,7 @@ export async function getUrls(user_id) {
   return data;
 }
 
+// assign the function to the createURL variable
 export async function createUrl({title, longUrl,customUrl, user_id}, qrcode) {
   // generate short url
   const short_url = Math.random().toString(36).substring(2,6);
