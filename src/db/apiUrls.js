@@ -19,10 +19,36 @@ export async function getUrls(user_id) {
   const {data, error} = await supabase.from("urls").delete().eq("id", id);
 
   if (error) {
+    console.error(error);                     // deleting a url
+    throw new Error("Unable to delete Url");
+  }
+
+  return data;
+}
+
+export async function createUrl({title, longUrl,customUrl, user_id}, qrcode) {
+  // generate short url
+  const short_url = Math.random().toString(36).substring(2,6);
+  const fileName= `qr-${short_url}`;    // generate a filename for the qr code
+
+    const {error:storageError} = await supabase.storage
+      .from("qrs")                        // name of bucket
+      .upload(fileName, qrcode);   // upload the qrcode to the storage
+
+    if (storageError) throw new Error(storageError.message);
+
+    // create a new url
+    const qr =  `${supabaseUrl}/storage/v1/object/public/qrs/${fileName} `;  // get the url of the uploaded qr code
+
+
+  const {data, error} = await supabase.from("urls").delete().eq("id", id);
+
+  if (error) {
     console.error(error);
     throw new Error("Unable to delete Url");
   }
 
   return data;
 }
+
 
