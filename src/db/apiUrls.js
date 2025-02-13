@@ -41,11 +41,21 @@ export async function createUrl({title, longUrl,customUrl, user_id}, qrcode) {
     const qr =  `${supabaseUrl}/storage/v1/object/public/qrs/${fileName} `;  // get the url of the uploaded qr code
 
 
-  const {data, error} = await supabase.from("urls").delete().eq("id", id);
+  const {data, error} = await supabase.from("urls").insert([
+    {
+      title,
+      original_url: longUrl,
+      custom_url: customUrl || null,
+      user_id,
+      shortUrl: short_url,
+      qr_code: qr,
+    },
+  ])
+  .select();;
 
   if (error) {
     console.error(error);
-    throw new Error("Unable to delete Url");
+    throw new Error("Error creating short URL");
   }
 
   return data;
