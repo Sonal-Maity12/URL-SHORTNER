@@ -1,3 +1,4 @@
+
 import supabase, {supabaseUrl} from "./supabase";
 
 export async function getUrls(user_id) {
@@ -14,17 +15,28 @@ export async function getUrls(user_id) {
   return data;
 }
 
- //assign the function to the deleteUrls variable
- export async function deleteUrl(id) {
-  const {data, error} = await supabase.from("urls").delete().eq("id", id);
 
-  if (error) {
-    console.error(error);                     // deleting a url
-    throw new Error("Unable to delete Url");
+// get the long url of a short url from the database
+export const getLongUrl = async (id) => {
+  try {
+    const { data, error } = await supabase
+      .from("urls")
+      .select("id, original_url") // Use correct column names
+      .eq("short_url", id) // Fix column name from `shortUrl` to `short_url`
+      .single();
+
+    if (error) throw error;
+    if (!data) throw new Error("No URL found!");
+
+    return data;
+  } catch (error) {
+    console.error("❌ Error in getLongUrl:", error);
+    return null;
   }
+};
 
-  return data;
-}
+
+
 
 // assign the function to the createURL variable
 export async function createUrl({title, longUrl,customUrl, user_id}, qrcode) {
@@ -61,5 +73,22 @@ export async function createUrl({title, longUrl,customUrl, user_id}, qrcode) {
 
   return data;
 }
+
+
+ //assign the function to the deleteUrls variable
+ export async function deleteUrl(id) {
+  const {data, error} = await supabase
+  .from("urls")
+  .delete()
+  .eq("id", id);            // delete the url with the id of the user
+
+  if (error) {
+    console.error(error.message);                     
+    throw new Error("Unable to delete Url");
+  }
+
+  return data;
+}
+
 
 
