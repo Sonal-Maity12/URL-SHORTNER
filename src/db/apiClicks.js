@@ -15,17 +15,22 @@ import supabase from "./supabase";
 // }
 
 
-export async function getClicksForUrls(url_id) {
-    const {data, error} = await supabase
-      .from("clicks")
-      .select("*")
-      .eq("url_id", url_id);
-  
-    if (error) {
-      console.error(error);
-      throw new Error("Unable to load Status");
-    }
-  
-    return data;
+export async function getClicksForUrls(urlIds) {
+  if (!Array.isArray(urlIds)) {
+    throw new Error("urlIds must be an array");
   }
+
+  const { data, error } = await supabase
+    .from("clicks")
+    .select("*")
+    .in("url_id", urlIds.map(Number)); // Ensure IDs are integers
+
+  if (error) {
+    console.error("Supabase error:", error);
+    throw new Error("Error fetching clicks");
+  }
+
+  return data;
+}
+
   

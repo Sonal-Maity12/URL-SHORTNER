@@ -32,14 +32,14 @@ export async function createUrl({title, longUrl,customUrl, user_id}, qrcode) {
   const short_url = Math.random().toString(36).substring(2,6);
   const fileName= `qr-${short_url}`;    // generate a filename for the qr code
 
-    const {error:storageError} = await supabase.storage
-      .from("qrs")                        // name of bucket
-      .upload(fileName, qrcode);   // upload the qrcode to the storage
+  const {error:storageError} = await supabase.storage
+    .from("Qrs")                        // name of bucket
+    .upload(fileName, qrcode);   // upload the qrcode to the storage
 
-    if (storageError) throw new Error(storageError.message);
+  if (storageError) throw new Error(storageError.message);
 
-    // create a new url
-    const qr =  `${supabaseUrl}/storage/v1/object/public/qrs/${fileName} `;  // get the url of the uploaded qr code
+  // create a new url
+  const qr =  `${supabaseUrl}/storage/v1/object/public/Qrs/${fileName} `;  // get the url of the uploaded qr code
 
 
   const {data, error} = await supabase.from("urls").insert([
@@ -48,8 +48,8 @@ export async function createUrl({title, longUrl,customUrl, user_id}, qrcode) {
       original_url: longUrl,
       custom_url: customUrl || null,
       user_id,
-      shortUrl: short_url,
-      qr_code: qr,
+     short_url,
+      qr,
     },
   ])
   .select();;
