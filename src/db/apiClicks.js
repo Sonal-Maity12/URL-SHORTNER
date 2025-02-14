@@ -1,27 +1,14 @@
 import supabase from "./supabase";
 import { UAParser } from "ua-parser-js";
 
-// export async function getClicksForUrls(urlIds) {
-//     const {data, error}= await supabase
-//     .from("clicks")
-//     .select("*")
-//     .in("url_id", urlIds);
 
-//     if (!session.session) return null;
-//     if (error) {
-//         console.error(error.message);
-//         throw new Error ("Unable to load Clicks");
-//     }
-//     return data;
-// }
-
-
-export async function getClicksForUrls(urlIds) {
+// get the data from the database
+export async function getClicksForUrls(urlIds) {      
   if (!Array.isArray(urlIds)) {
     throw new Error("urlIds must be an array");
   }
 
-  const { data, error } = await supabase
+  const { data, error } = await supabase            
     .from("clicks")
     .select("*")
     .in("url_id", urlIds.map(Number)); // Ensure IDs are integers
@@ -33,6 +20,22 @@ export async function getClicksForUrls(urlIds) {
 
   return data;
 }
+
+// Fetch clicks for a single URL
+export async function getClicksForUrl(url_id) {     
+  const {data, error} = await supabase                 
+    .from("clicks")
+    .select("*")
+    .eq("url_id", url_id);
+
+  if (error) {
+    console.error(error);
+    throw new Error("Unable to load Stats");
+  }
+
+  return data;
+}
+
 
 const parser =new UAParser(); // create a new parser  
 

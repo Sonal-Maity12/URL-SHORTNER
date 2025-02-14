@@ -15,6 +15,23 @@ export async function getUrls(user_id) {
   return data;
 }
 
+ // Get the URL from the database
+export async function getUrl({id, user_id}) {           
+  const {data, error} = await supabase                   
+    .from("urls")
+    .select("*")
+    .eq("id", id)
+    .eq("user_id", user_id)
+    .single();
+
+  if (error) {
+    console.error(error);
+    throw new Error("Short Url not found");
+  }
+
+  return data;
+}
+
 
 // get the long url of a short url from the database
 export const getLongUrl = async (id) => {
@@ -89,6 +106,5 @@ export async function createUrl({title, longUrl,customUrl, user_id}, qrcode) {
 
   return data;
 }
-
 
 
