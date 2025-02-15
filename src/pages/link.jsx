@@ -6,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import Location from "@/components/ui/location-stats";
 import { UrlState } from "@/context";
 import { getClicksForUrl } from "@/db/apiClicks";
 import { deleteUrl, getUrl } from "@/db/apiUrls";
@@ -141,9 +142,9 @@ const Link = () => {
                 </CardContent>
               </Card>
 
-              <CardTitle>Location Data</CardTitle>
-              {/* <Location stats={stats} /> */}
-              <CardTitle>Device Info</CardTitle>
+              <CardTitle>Location Data</CardTitle>   {/* show location data */}
+              <Location stats={stats} />       
+              <CardTitle>Device Info</CardTitle>      {/*  show device info */}
               {/* <DeviceStats stats={stats} /> */}
             </CardContent>
           ) : (
