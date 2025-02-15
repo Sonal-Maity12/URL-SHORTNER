@@ -8,7 +8,7 @@ import { BarLoader } from 'react-spinners';
 const RedirectLink = () => {
   const {id} = useParams();                             // Get the id from the URL
 
-  const {loading, data, fn} = useFetch(getLongUrl, id);
+  const {loading, data, fn} = useFetch(getLongUrl, id);       // Fetch the long URL from the database
 
   const {loading: loadingStats, fn: fnStats} = useFetch(storeClicks, {               
     id: data?.id,
@@ -16,7 +16,7 @@ const RedirectLink = () => {
   });
 
   useEffect(() => {                  
-    fn();                         // fetch long url
+    fn();                         // Fetch the long URL when the component mounts
   }, []);
 
   useEffect(() => {                 

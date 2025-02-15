@@ -8,28 +8,27 @@ import { BeatLoader } from "react-spinners";
 
 // Fetch Urls from API
 const LinkCard = ({ url, fetchUrls }) => {
-    const downloadImage =() => {
-        const imageUrl =url?.qr;
-        const fileName = url?.title;
-        
-        // create anchor tag using document.createElement
-        const anchor =document.createElement("a");
-        anchor.href = imageUrl;                     // set the href attribute and assign imageUrl
-        anchor.download = fileName;                 // set the download attribute and assign fileName
+  const downloadImage = () => {
+    const imageUrl = url?.qr;
+    const fileName = url?.title; // Desired file name for the downloaded image
 
-        // append the anchor to the body of the document
-        document.body.appendChild(anchor);         
+    // create anchor element using document.createElement
+    const anchor = document.createElement("a");
+    anchor.href = imageUrl; // set the href attribute and assign imageUrl
+    anchor.download = fileName; // set the download attribute and assign fileName
 
-        // Trigger the download by simulating a click event
-        anchor.click(); 
+    // append the anchor to the body of the document
+    document.body.appendChild(anchor);
 
-        // remove the anchor from the body of the document
-        document.body.removeChild(anchor);            
-    };
+    // Trigger the download by simulating a click event
+    anchor.click();
 
-    // fetch delete url from API
-    const {loading: loadingDelete, fn: fnDelete} = useFetch(deleteUrl, url?.id);
+    // remove the anchor from the body of the document
+    document.body.removeChild(anchor);
+  };
 
+  // fetch delete url from API
+  const { loading: loadingDelete, fn: fnDelete } = useFetch(deleteUrl, url?.id);
 
   return (
     <div className="flex flex-col md:flex-row gap-5 border p-4 bg-gray-900 rounded-lg">
@@ -59,23 +58,31 @@ const LinkCard = ({ url, fetchUrls }) => {
           {/* To show created time and date*/}
         </span>
       </Link>
-      
+
       <div className="flex gap-2">
         {/* use Navigator function to navigate  and write text to the clipboard and copy this to the edit page(browser) */}
-        <Button onClick={()=> 
-            navigator.clipboard.writeText(`https://trimmer.in/${url?.short_url}`)
-        }>
-            <Copy/>
+        <Button
+          onClick={() =>
+            navigator.clipboard.writeText(
+              `https://trimmer.in/${url?.short_url}`
+            )
+          }
+        >
+          <Copy />
         </Button>
-        <Button onClick={()=>downloadImage}>
-            <Download/>
+        <Button onClick={() => downloadImage}>
+          <Download />
         </Button>
-        <Button onClick={()=>fnDelete().then(()=> fetchUrls())}>             {/* After Delete then call the fetchUrls again*/} 
-
-            {loadingDelete?<BeatLoader size={5} color="white" />:<Trash/>}   {/* If loading then show loader else show trash icon*/}
-            
+        <Button onClick={() => fnDelete().then(() => fetchUrls())}>
+          {" "}
+          {/* After Delete then call the fetchUrls again*/}
+          {loadingDelete ? (
+            <BeatLoader size={5} color="white" />
+          ) : (
+            <Trash />
+          )}{" "}
+          {/* If loading then show loader else show trash icon*/}
         </Button>
-
       </div>
     </div>
   );
