@@ -35,12 +35,12 @@ const LandingPage = () => {
         </Button>
       </form>
       <img
-        src="https://ps.w.org/url-shortify/assets/banner-772x250.png?rev=3175307"
+        src="/banner3.png"
         alt="banner"
         className="w-full my-11 md:px-11"
       />
 
-      <Accordion type="multiple" collapsible className="w-full md:px-11  text-gray-900">
+      <Accordion type="multiple" collapsible= "true" className="w-full md:px-11  text-gray-900">
       <AccordionItem value="item-1">
           <AccordionTrigger>
            How was the Trimer URL shortner works?

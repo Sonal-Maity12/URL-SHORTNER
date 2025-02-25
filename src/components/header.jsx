@@ -26,8 +26,8 @@ const Header = () => {
       <nav className="pt-6 flex justify-between items-center ml-3 text-black px-10">
         <Link to="/">
           <img
-            src="https://miro.medium.com/v2/resize:fit:566/1*DQAVyAM94Q88sk5Pq1iOJg.png"
-            className="h-16"
+            src="/logo1.jpg"
+            className="h-16 bg-indigo-600"
             alt="logo"
           />
         </Link>
